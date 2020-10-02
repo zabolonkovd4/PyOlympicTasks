@@ -1,7 +1,10 @@
+import math
+
 def search(cities, old_data, size, now, end, max):
     if (now == end):
         return size
     global short_cut
+    global cut_is_realy
     if (size + 1) > short_cut: return -1
     old_data.append(now)
     results = []
@@ -21,6 +24,7 @@ def search(cities, old_data, size, now, end, max):
         if i < result: result = i
     if result == max: return -1
     else:
+        cut_is_realy = True
         short_cut = result
         return result
 ##################################################
@@ -34,7 +38,6 @@ for i in range(cityNumbers):
         'neighbors':[]}
     cities.append(City)
 distance = int(input())
-distance = distance * distance
 first_last = input().split()
 first = int(first_last[0])
 last = int(first_last[1])
@@ -42,10 +45,12 @@ last = int(first_last[1])
 for i in range(cityNumbers):
     for k in range(cityNumbers):
         if i == k: continue
-        R = (cities[i]['y'] - cities[k]['y']) * (cities[i]['y'] - cities[k]['y']) + (cities[i]['x'] - cities[k]['x']) * (cities[i]['x'] - cities[k]['x'])
+        R = math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2)
+        R = math.sqrt(R)
         if R <= distance: cities[i]['neighbors'].append(k)
 old_data = []
 short_cut = cityNumbers
+cut_is_realy = False
 result = search(cities,old_data,0, first - 1,last - 1,cityNumbers)
-if short_cut == cityNumbers: print(-1)
-else: print(short_cut)
+if cut_is_realy: print(short_cut)
+else: print(-1)
