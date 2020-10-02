@@ -13,20 +13,16 @@ def search(cities, old_data, size, now, end, max):
                 break
         if tr:
             continue
-        error = False
         size_local = search(cities,old_data,size + 1, i, end, max)
         results.append(size_local)
-    if error:
-        return -1
+    result = max
+    for i in results:
+        if i == -1: continue
+        if i < result: result = i
+    if result == max: return -1
     else:
-        result = max
-        for i in results:
-            if i == -1: continue
-            if i < result: result = i
-        if result == max: return -1
-        else:
-           short_cut = result
-           return result
+        short_cut = result
+        return result
 ##################################################
 cityNumbers = int(input())
 cities = []
@@ -51,4 +47,5 @@ for i in range(cityNumbers):
 old_data = []
 short_cut = cityNumbers
 result = search(cities,old_data,0, first - 1,last - 1,cityNumbers)
-print(short_cut)
+if short_cut == cityNumbers: print(-1)
+else: print(short_cut)
