@@ -1,10 +1,12 @@
 import math
 
 def search(cities, old_data, size, now, end, max):
-    if (now == end):
-        return size
     global short_cut
-    global cut_is_realy
+    global cut_is_real
+    if (now == end):
+        cut_is_real = True
+        short_cut = size
+        return size
     if (size + 1) > short_cut: return -1
     old_data.append(now)
     results = []
@@ -24,7 +26,7 @@ def search(cities, old_data, size, now, end, max):
         if i < result: result = i
     if result == max: return -1
     else:
-        cut_is_realy = True
+        cut_is_real = True
         short_cut = result
         return result
 ##################################################
@@ -50,7 +52,7 @@ for i in range(cityNumbers):
         if R <= distance: cities[i]['neighbors'].append(k)
 old_data = []
 short_cut = cityNumbers
-cut_is_realy = False
+cut_is_real = False
 result = search(cities,old_data,0, first - 1,last - 1,cityNumbers)
-if cut_is_realy: print(short_cut)
+if cut_is_real: print(short_cut)
 else: print(-1)
