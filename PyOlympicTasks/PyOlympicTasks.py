@@ -1,5 +1,6 @@
 import math
 import operator
+import copy
 from random import shuffle
 ##################################################
 def recursive_search(cities, old_data, size, now, end, max):
@@ -65,7 +66,7 @@ def list_search(cities, path, size, now, end, max):
             cut = True
     return size
 ##################################################
-def atom_search(cities, now, end):
+def spider_search(cities, now, end):
     global short_cut
     global cut_is_real
     if(now == end):
@@ -94,8 +95,9 @@ def atom_search(cities, now, end):
                     return 1
                 else:
                     error = False
-                    i.append(j)
-                    new_all_paths.append(i)
+                    ii = copy.deepcopy(i)
+                    ii.append(j)
+                    new_all_paths.append(ii)
         if(error):break
         size = size + 1
         all_paths=new_all_paths
@@ -126,12 +128,12 @@ for i in range(cityNumbers):
         #if R <= distance: cities[i]['neighbors'].append(neig)
         if R <= distance: cities[i]['neighbors'].append(k)
     #cities[i]['neighbors'].sort(key=operator.itemgetter('R'),reverse=True)
-    shuffle(cities[i]['neighbors'])
+    #shuffle(cities[i]['neighbors'])
 path = []
 short_cut = cityNumbers
 cut_is_real = False
 #result = recursive_search(cities,path,0, first - 1,last - 1,cityNumbers)
 #result = list_search(cities,path,0, first - 1,last - 1,cityNumbers)
-result = atom_search(cities,first - 1,last - 1)
+result = spider_search(cities,first - 1,last - 1)
 if cut_is_real: print(short_cut)
 else: print(-1)
