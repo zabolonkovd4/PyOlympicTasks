@@ -94,13 +94,13 @@ def atom_search(cities, now, end):
                     return 1
                 else:
                     error = False
-                    ii = [i,j]
-                   # i.append(j)
-                    new_all_paths.append(ii)
+                    i.append(j)
+                    new_all_paths.append(i)
         if(error):break
         size = size + 1
         all_paths=new_all_paths
     return -1
+##################################################
 cityNumbers = int(input())
 cities = []
 for i in range(cityNumbers):
