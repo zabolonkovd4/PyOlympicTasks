@@ -1,4 +1,6 @@
 import math
+import operator
+from random import shuffle
 ##################################################
 def recursive_search(cities, old_data, size, now, end, max):
     global short_cut
@@ -36,34 +38,69 @@ def list_search(cities, path, size, now, end, max):
     path.append(now)
     cut = True
     while(cut):
+        print(path)
         cut = False
-        if(now==end):
-            if(size<short_cut): short_cut=size
+        if(now == end):
+            if(size < short_cut): short_cut = size
             cut_is_real = True
-            if(not cut and len(path)>1):
+            if(not cut and len(path) > 1):
                 path.pop()
-                now = path[len(path)-1]
-                size=size-1
-                cut=True
+                now = path[len(path) - 1]
+                size = size - 1
+                cut = True
         for i in cities[now]['neighbors']:
-            if i in path:continue
-            if size in cities[i]['ban']:continue
-            else:
-                if((size+1)>short_cut):continue
-                else:
-                    cities[i]['ban'].append(size)
-                    size=size+1
-                    cut = True
-                    now = i
-                    path.append(now)
-                    break
-        if(not cut and len(path)>1):
+            if i['index'] in path:continue
+            if size in cities[i['index']]['ban']:continue
+            if((size + 1) >= short_cut):continue
+            cities[i['index']]['ban'].append(size)
+            size = size + 1
+            cut = True
+            now = i['index']
+            path.append(now)
+            break
+        if(not cut and len(path) > 1):
             path.pop()
-            now = path[len(path)-1]
-            size=size-1
-            cut=True
+            now = path[len(path) - 1]
+            size = size - 1
+            cut = True
     return size
 ##################################################
+def atom_search(cities, now, end):
+    global short_cut
+    global cut_is_real
+    if(now == end):
+        short_cut = 0
+        cut_is_real = True
+        return 1
+    all_paths = []
+    for i in cities[now]['neighbors']:
+        if i==end:
+            short_cut = 1
+            cut_is_real = True
+            return 1
+        path = [now,i]
+        all_paths.append(path)
+    size = 1
+    while(not cut_is_real):
+        error = True
+        new_all_paths = []
+        for i in all_paths:
+            for j in cities[i[len(i) - 1]]['neighbors']:
+                if j in i:continue
+                if j == end:
+                    short_cut = size + 1
+                    cut_is_real = True
+                    error = False
+                    return 1
+                else:
+                    error = False
+                    ii = [i,j]
+                   # i.append(j)
+                    new_all_paths.append(ii)
+        if(error):break
+        size = size + 1
+        all_paths=new_all_paths
+    return -1
 cityNumbers = int(input())
 cities = []
 for i in range(cityNumbers):
@@ -75,7 +112,7 @@ for i in range(cityNumbers):
         'ban':[]}
     cities.append(City)
 distance = int(input())
-distance = int(pow(distance,2))
+distance = pow(distance,2)
 first_last = input().split()
 first = int(first_last[0])
 last = int(first_last[1])
@@ -83,13 +120,18 @@ last = int(first_last[1])
 for i in range(cityNumbers):
     for k in range(cityNumbers):
         if i == k: continue
-        R = int(math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
-       # R = math.sqrt(R)
+        R = (math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
+        #R = math.sqrt(R)
+        neig = {'R':R, 'index':k}
+        #if R <= distance: cities[i]['neighbors'].append(neig)
         if R <= distance: cities[i]['neighbors'].append(k)
+    #cities[i]['neighbors'].sort(key=operator.itemgetter('R'),reverse=True)
+    shuffle(cities[i]['neighbors'])
 path = []
 short_cut = cityNumbers
 cut_is_real = False
 #result = recursive_search(cities,path,0, first - 1,last - 1,cityNumbers)
-result = list_search(cities,path,0, first - 1,last - 1,cityNumbers)
+#result = list_search(cities,path,0, first - 1,last - 1,cityNumbers)
+result = atom_search(cities,first - 1,last - 1)
 if cut_is_real: print(short_cut)
 else: print(-1)
