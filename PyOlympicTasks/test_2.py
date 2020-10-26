@@ -6,12 +6,15 @@ def spider_search(cities, now, end,short_cut,cut_is_real):
         short_cut = 0
         cut_is_real = True
         return 1,short_cut,cut_is_real
+    cities_visited = []
+    cities_visited.append(now)
     all_paths = []
     for i in cities[now]['neighbors']:
         if i==end:
             short_cut = 1
             cut_is_real = True
             return 1,short_cut,cut_is_real
+        cities_visited.append(i)
         path = [now,i]
         all_paths.append(path)
     size = 1
@@ -21,6 +24,7 @@ def spider_search(cities, now, end,short_cut,cut_is_real):
         for i in all_paths:
             for j in cities[i[len(i) - 1]]['neighbors']:
                 if j in i:continue
+                if j in cities_visited:continue
                 if j == end:
                     short_cut = size + 1
                     cut_is_real = True
@@ -30,6 +34,7 @@ def spider_search(cities, now, end,short_cut,cut_is_real):
                     error = False
                     ii = copy.deepcopy(i)
                     ii.append(j)
+                    cities_visited.append(j)
                     new_all_paths.append(ii)
         if(error):break
         size = size + 1
