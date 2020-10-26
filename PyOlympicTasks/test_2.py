@@ -39,7 +39,7 @@ def create_graph(cityNumbers, cities, distance):
     for i in range(cityNumbers):
         for k in range(cityNumbers):
             if i == k: continue
-            R = (math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
+            R = abs(cities[i]['y'] - cities[k]['y']) + abs(cities[i]['x'] - cities[k]['x'])
             if R <= distance: cities[i]['neighbors'].append(k)
     return cities
 def search(cities, now, end , short_cut,cut_is_real):
@@ -55,7 +55,6 @@ def my_test(cityNumbers,coords,distance,first,last):
         'neighbors':[],
         'ban':[]}
         cities.append(City)        
-    distance = pow(distance,2)
     cities = create_graph(cityNumbers, cities, distance)    
     short_cut = cityNumbers
     cut_is_real = False

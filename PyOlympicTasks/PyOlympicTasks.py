@@ -111,13 +111,9 @@ def create_graph(cityNumbers, cities, distance):
     for i in range(cityNumbers):
         for k in range(cityNumbers):
             if i == k: continue
-            R = (math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
-            #R = math.sqrt(R)
+            R = abs(cities[i]['y'] - cities[k]['y']) + abs(cities[i]['x'] - cities[k]['x'])
             neig = {'R':R, 'index':k}
-            #if R <= distance: cities[i]['neighbors'].append(neig)
             if R <= distance: cities[i]['neighbors'].append(k)
-        #cities[i]['neighbors'].sort(key=operator.itemgetter('R'),reverse=True)
-        #shuffle(cities[i]['neighbors'])
     return cities
 
 cityNumbers = int(input())
@@ -131,7 +127,6 @@ for i in range(cityNumbers):
         'ban':[]}
     cities.append(City)
 distance = int(input())
-distance = pow(distance,2)
 first_last = input().split()
 first = int(first_last[0])
 last = int(first_last[1])
