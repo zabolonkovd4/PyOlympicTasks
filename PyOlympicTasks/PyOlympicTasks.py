@@ -2,6 +2,7 @@ import math
 import operator
 import copy
 from random import shuffle
+
 ##################################################
 def recursive_search(cities, old_data, size, now, end, max):
     global short_cut
@@ -103,13 +104,29 @@ def spider_search(cities, now, end):
         all_paths=new_all_paths
     return -1
 ##################################################
+
+##################################################
+
+def create_graph(cityNumbers, cities, distance):
+    for i in range(cityNumbers):
+        for k in range(cityNumbers):
+            if i == k: continue
+            R = (math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
+            #R = math.sqrt(R)
+            neig = {'R':R, 'index':k}
+            #if R <= distance: cities[i]['neighbors'].append(neig)
+            if R <= distance: cities[i]['neighbors'].append(k)
+        #cities[i]['neighbors'].sort(key=operator.itemgetter('R'),reverse=True)
+        #shuffle(cities[i]['neighbors'])
+    return cities
+
 cityNumbers = int(input())
 cities = []
 for i in range(cityNumbers):
     coord = input().split()
     City = {'x':int(coord[0]),
-         'y':int(coord[1]),
-         'index':i,
+            'y':int(coord[1]),
+            'index':i,
         'neighbors':[],
         'ban':[]}
     cities.append(City)
@@ -119,16 +136,8 @@ first_last = input().split()
 first = int(first_last[0])
 last = int(first_last[1])
 
-for i in range(cityNumbers):
-    for k in range(cityNumbers):
-        if i == k: continue
-        R = (math.pow((cities[i]['y'] - cities[k]['y']),2) + math.pow((cities[i]['x'] - cities[k]['x']),2))
-        #R = math.sqrt(R)
-        neig = {'R':R, 'index':k}
-        #if R <= distance: cities[i]['neighbors'].append(neig)
-        if R <= distance: cities[i]['neighbors'].append(k)
-    #cities[i]['neighbors'].sort(key=operator.itemgetter('R'),reverse=True)
-    #shuffle(cities[i]['neighbors'])
+cities = create_graph(cityNumbers, cities, distance)
+
 path = []
 short_cut = cityNumbers
 cut_is_real = False
