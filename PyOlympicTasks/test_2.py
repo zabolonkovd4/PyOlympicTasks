@@ -44,8 +44,11 @@ def create_graph(cityNumbers, cities, distance):
     for i in range(cityNumbers):
         for k in range(cityNumbers):
             if i == k: continue
+            if k in cities[i]['neighbors']: continue
             R = abs(cities[i]['y'] - cities[k]['y']) + abs(cities[i]['x'] - cities[k]['x'])
-            if R <= distance: cities[i]['neighbors'].append(k)
+            if R <= distance:
+               cities[i]['neighbors'].append(k)
+               cities[k]['neighbors'].append(i)
     return cities
 def search(cities, now, end , short_cut,cut_is_real):
     result,short_cut,cut_is_real = spider_search(cities,now -1, end-1,short_cut,cut_is_real)
