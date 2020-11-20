@@ -2,11 +2,11 @@ import math
 import operator
 import copy
 from random import shuffle
-
 ##################################################
 def spider_search(cities, start, end):
     global short_cut
     global cut_is_real
+    global distance
     if(start == end):
         short_cut = 0
         cut_is_real = True
@@ -19,8 +19,9 @@ def spider_search(cities, start, end):
         error = True
         new_last_cities = []
         for i in last_cities:
-            for j in cities[i]['neighbors']:
+            for j in cities:
                 if cities[j]['ban']: continue
+                if (abs(cities[i]['y'] - cities[j]['y']) + abs(cities[i]['x'] - cities[j]['x'])) > distance: continue
                 if j == end:
                     short_cut = size + 1
                     cut_is_real = True
@@ -35,34 +36,18 @@ def spider_search(cities, start, end):
         last_cities = new_last_cities
     return -1
 ##################################################
-
-def create_graph(cityNumbers, cities, distance):
-    for i in range(cityNumbers):
-        for k in range(cityNumbers):
-            if i == k: continue
-            if k in cities[i]['neighbors']: continue
-            R = abs(cities[i]['y'] - cities[k]['y']) + abs(cities[i]['x'] - cities[k]['x'])
-            neig = {'R':R, 'index':k}
-            if R <= distance:
-               cities[i]['neighbors'].append(k)
-               cities[k]['neighbors'].append(i)
-    return cities
-
 cityNumbers = int(input())
 cities = {}
 for i in range(cityNumbers):
     coord = input().split()
     City = {'x':int(coord[0]),
             'y':int(coord[1]),
-        'neighbors':[],'ban':False}
+        'ban':False}
     cities[i] = (City)
 distance = int(input())
 first_last = input().split()
 first = int(first_last[0])
 last = int(first_last[1])
-
-cities = create_graph(cityNumbers, cities, distance)
-
 path = []
 short_cut = cityNumbers
 cut_is_real = False
