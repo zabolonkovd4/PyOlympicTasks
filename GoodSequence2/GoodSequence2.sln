@@ -3,32 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PyOlympicTasks", "PyOlympicTasks\PyOlympicTasks.pyproj", "{D4160FF9-6C82-4050-AA76-178AB5DE2546}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoodSequence2", "GoodSequence2\GoodSequence2\GoodSequence2.vcxproj", "{2B42FB84-FA3B-4E17-92A9-877F3171F092}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoodSequence2", "GoodSequence2\GoodSequence2.vcxproj", "{2B42FB84-FA3B-4E17-92A9-877F3171F092}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Release|x64.ActiveCfg = Release|Any CPU
-		{D4160FF9-6C82-4050-AA76-178AB5DE2546}.Release|x86.ActiveCfg = Release|Any CPU
-		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Debug|x64.ActiveCfg = Debug|x64
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Debug|x64.Build.0 = Debug|x64
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Debug|x86.ActiveCfg = Debug|Win32
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Debug|x86.Build.0 = Debug|Win32
-		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Release|Any CPU.ActiveCfg = Release|Win32
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Release|x64.ActiveCfg = Release|x64
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Release|x64.Build.0 = Release|x64
 		{2B42FB84-FA3B-4E17-92A9-877F3171F092}.Release|x86.ActiveCfg = Release|Win32
@@ -38,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {714579AE-62EE-4106-9206-2063AB6627FD}
+		SolutionGuid = {539CC06E-319A-4D6B-BDE2-1166116FA3AA}
 	EndGlobalSection
 EndGlobal
