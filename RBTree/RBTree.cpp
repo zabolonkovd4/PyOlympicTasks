@@ -9,40 +9,68 @@ public:
 
 int rb_tree::countRed(int i, int h, int N)
 {
-    int j = N - i;
-    if (i < 1) return 0;
-    if (i - 1 < j)
+    int leftNodeCount = i - 1;
+    int rightNodeCount = N - i;
+    if (leftNodeCount < 0 || rightNodeCount < 0)
     {
-		int countLeft = countBlack(i - 1, h, N);
-		int countRight = countBlack(j, h, N);
+        return 0;
+    }
+    if (N <= 3)
+    {
+		cout << "countRed returns 0" << endl; 
+        return 1;
+    }
+    if (leftNodeCount < rightNodeCount)
+    {
+		int countLeft = countBlack(i - 1, h, leftNodeCount);
+		int countRight = countBlack(N - i, h, rightNodeCount);
+        cout << "countRed returns " << countLeft * countRight << endl;
         return countLeft * countRight;
     }
-    if (i - 1 == j)
+    if (leftNodeCount == rightNodeCount)
     {
-		int countLeft = countBlack(i - 1, h - 1, N) + countRed(i - 1, h - 1, N);
+		int countLeft = countBlack(i - 1, h, leftNodeCount) + countRed(i - 1, h, leftNodeCount);
+        cout << "countRed returns " << countLeft * (countLeft + 1) / 2 << endl;
         return countLeft * (countLeft + 1) / 2;
     }
-    if (i - 1 > j)
-        cout << "ebanina" << endl; return 0;
+    if (leftNodeCount > rightNodeCount)
+    {
+        cout << "Debug: error" << endl; 
+        return 0;
+    }
 }
 
 int rb_tree::countBlack(int i, int h, int N)
 {
-    int j = N - i;
-    if (i < 1) return 0;
-    if (i - 1 < j)
+    int leftNodeCount = i - 1;
+    int rightNodeCount = N - i;
+    if (leftNodeCount < 0 || rightNodeCount < 0)
     {
-		int countLeft = countBlack(i - 1, h - 1, N) + countRed(i - 1, h - 1, N);
-		int countRight = countBlack(j, h - 1, N) + countRed(j, h - 1, N);
+        return 0;
+    }
+    if (N <= 3)
+    {
+		cout << "countBlack returns 0" << endl; 
+        return 1;
+    }
+    if (leftNodeCount < rightNodeCount)
+    {
+		int countLeft = countBlack(i - 1, h - 1, leftNodeCount) + countRed(i - 1, h - 1, leftNodeCount);
+		int countRight = countBlack(N - i, h - 1, rightNodeCount) + countRed(N - i, h - 1, rightNodeCount);
+        cout << "countBlack returns " << countLeft * countRight << endl;
         return countLeft * countRight;
     }
-    if (i - 1 == j)
+    if (leftNodeCount == rightNodeCount)
     {
-		int countLeft = countBlack(i - 1, h - 1, N) + countRed(i - 1, h - 1, N);
+		int countLeft = countBlack(i - 1, h - 1, leftNodeCount) + countRed(i - 1, h - 1, leftNodeCount);
+        cout << "countBlack returns " << countLeft * (countLeft + 1) / 2 << endl;
         return countLeft * (countLeft + 1) / 2;
     }
-    if (i - 1 > j)
-        cout << "ebanina" << endl; return 0;
+    if (leftNodeCount > rightNodeCount)
+    {
+        cout << "Debug: error" << endl; 
+        return 0;
+    }
 }
 
 int main()
@@ -50,11 +78,11 @@ int main()
     rb_tree rb;
     unsigned int n;
     std::cin >> n;
-    unsigned int h = 2 * log2(n);
+    unsigned int h = 2 * log2(n+1);
 
     int lastSum = 0;
     int maxI = (n + 1) / 2;
-    for (int hh = 1; hh < 20; hh++)
+    for (int hh = 1; hh < h; hh++)
     {
 		for (int i = 1; i <= maxI; i++)
 		{
