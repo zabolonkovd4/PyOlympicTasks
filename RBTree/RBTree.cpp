@@ -13,11 +13,16 @@ int rb_tree::countRed(int i, int h, int N)
     int rightNodeCount = N - i;
     if (leftNodeCount < 0 || rightNodeCount < 0)
     {
-        return 0;
+        return 1;
     }
-    if (N <= 3)
+    if (N == 3 || N == 1)
     {
 		cout << "countRed returns 0" << endl; 
+        return 0;
+    }
+    if (N == 2)
+    {
+		cout << "countRed returns 1" << endl; 
         return 1;
     }
     if (leftNodeCount < rightNodeCount)
@@ -46,11 +51,16 @@ int rb_tree::countBlack(int i, int h, int N)
     int rightNodeCount = N - i;
     if (leftNodeCount < 0 || rightNodeCount < 0)
     {
-        return 0;
+        return 1;
     }
-    if (N <= 3)
+    if (N == 3 || N == 1)
     {
 		cout << "countBlack returns 0" << endl; 
+        return 0;
+    }
+    if (N == 2)
+    {
+		cout << "countBlack returns 1" << endl; 
         return 1;
     }
     if (leftNodeCount < rightNodeCount)
@@ -90,6 +100,7 @@ int main()
 		}
     }
     cout << lastSum;
+
 
     return 0;
 }
